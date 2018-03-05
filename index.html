@@ -47,7 +47,7 @@ for(var i=0;i<data.length;i++){
     document.getElementById("text").innerHTML=texthtml;
   }
   function tweet(){
-    window.open('https://twitter.com/intent/tweet?text='+texthtml+'&url='+location.href, '_blank');
+    window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+'&url='+location.href, '_blank');
   }
 </script>
 <style>
