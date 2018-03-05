@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <title>デレマスシコチェックリスト</title>
+  <title>デレマスキャラシコチェックリスト</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
-  <h1>デレマスシコキャラチェックリスト</h1>
+  <h1>デレマスキャラシコチェックリスト</h1>
   <div id="table">
     <div class="chara" style="background-color:white;" onClick="addChar(17,this)">島村卯月</div>
   </div>
@@ -42,12 +43,12 @@ for(var i=0;i<data.length;i++){
     else{
       avage= total_age/total_char;
       var comp = total_char/data.length*100;
-      texthtml="私は"+total_char+"人のキャラでシコりました。平均年齢は"+avage.toFixed(1)+"歳です。 コンプリート率"+comp.toFixed(1)+"%";
+      texthtml="私は"+total_char+"人のデレマスキャラでシコりました。\n平均年齢は"+avage.toFixed(1)+"歳です。\nコンプリート率"+comp.toFixed(1)+"%\n";
     }
     document.getElementById("text").innerHTML=texthtml;
   }
   function tweet(){
-    window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+'&url='+location.href, '_blank');
+    window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+'&hashtags=%E3%83%87%E3%83%AC%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%A9%E3%82%B7%E3%82%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88&url='+location.href, '_blank');
   }
 </script>
 <style>
