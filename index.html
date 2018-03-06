@@ -24,6 +24,7 @@
 var total_age=0;
 var total_char=0;
 var genhtml="";
+var ua = navigator.userAgent;
 for(var i=0;i<data.length;i++){
   genhtml+="<div class='chara' style='background-color:white;' onClick='addChar("+data[i][1]+",this)'>"+data[i][0]+"</div>";
 }
@@ -55,12 +56,22 @@ for(var i=0;i<data.length;i++){
   }
   var fuckPopupBlock;
   function tweet(url){
-    fuckPopupBlock.location.href = 'https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+" "+url+'&hashtags=%E3%83%87%E3%83%AC%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%A9%E3%82%B7%E3%82%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88&url=https://sudosan.github.io/imas_cg_shikoChecklist/';
+    var t='https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+" "+url+'&hashtags=%E3%83%87%E3%83%AC%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%A9%E3%82%B7%E3%82%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88&url=https://sudosan.github.io/imas_cg_shikoChecklist/';
+    if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Windows Phone') > 0) {
+      location.href = t;
+    }
+    else{
+      fuckPopupBlock.location.href = t;
+    }
   }
   var ssb64;
   function ss(){
-    fuckPopupBlock = window.open('', '_blank');
-    fuckPopupBlock.document.write("画像アップロード中...");
+    if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Windows Phone') > 0) {
+    }
+    else{
+      fuckPopupBlock = window.open('', '_blank');
+      fuckPopupBlock.document.write("画像アップロード中...");
+    }
     html2canvas(document.getElementById("table_wrap"),{width:1000,windowWidth:1000,y:110,height:900,windowHeight:900}).then(canvas => {
       ssb64 = canvas.toDataURL("image/png");
       yupload();
@@ -70,7 +81,7 @@ for(var i=0;i<data.length;i++){
     var fd = new FormData();
     fd.append("expiresAt","null");
     fd.append("imagedata",toBlob(ssb64));
-    fd.append("name",texthtml);
+    fd.append("name","キャラクター一覧");
     fetch("https://yabumi.cc/api/images.json", {
       mode: 'cors',
       method: 'POST',
