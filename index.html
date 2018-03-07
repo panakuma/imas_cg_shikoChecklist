@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ja">
 <head>
+  <meta charset="utf-8">
   <title>デレマスキャラシコチェックリスト</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <script src="html2canvas.min.js"></script>
@@ -66,13 +67,16 @@ for(var i=0;i<data.length;i++){
   }
   var ssb64;
   function ss(){
+    //iOSバグ対策
+    scrollTo(0,0);
+    
     if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Windows Phone') > 0) {
     }
     else{
       fuckPopupBlock = window.open('', '_blank');
       fuckPopupBlock.document.write("画像アップロード中...");
     }
-    html2canvas(document.getElementById("table_wrap"),{width:1000,windowWidth:1000,y:110,height:900,windowHeight:900}).then(canvas => {
+    html2canvas(document.getElementById("table_wrap"),{width:1080,windowWidth:1080,y:50,height:1000,windowHeight:1000,scale:1}).then(canvas => {
       ssb64 = canvas.toDataURL("image/png");
       yupload();
     });
@@ -114,6 +118,7 @@ for(var i=0;i<data.length;i++){
 #table{
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 .chara{
   cursor:pointer;
@@ -121,7 +126,8 @@ for(var i=0;i<data.length;i++){
   padding: 3px;
   border-radius: 2px;
   border:black 1px solid;
-
+  min-width: 70px;
+  text-align: center;
 }
 #wrap{
   margin-top:20px;
