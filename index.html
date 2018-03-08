@@ -94,7 +94,7 @@ for(var i=0;i<data.length;i++){
       fuckPopupBlock = window.open('', '_blank');
       fuckPopupBlock.document.write("画像アップロード中...");
     }
-    html2canvas(document.getElementById("table_wrap"),{width:1080,windowWidth:1080,y:50,height:1000,windowHeight:1000,scale:1}).then(canvas => {
+    html2canvas(document.getElementById("table_wrap"),{width:1080,windowWidth:1080,y:150,height:1000,windowHeight:1000,scale:1}).then(canvas => {
       ssb64 = canvas.toDataURL("image/png");
       yupload();
     });
