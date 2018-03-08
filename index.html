@@ -7,7 +7,7 @@
   <script src="html2canvas.min.js"></script>
 </head>
 <body>
-  <h1>デレマスキャラシコチェックリスト</h1>
+  <h1>デレマスキャラシコチェックリスト　<button onclick="reset();">リセット</button></h1>
   <div id="table_wrap">
     <div id="table"></div>
     <div id="ex">
@@ -45,6 +45,9 @@ for(var i=0;i<data.length;i++){
       total_age-=a;
       total_char-=1;
     }
+    statusUpdate();
+  }
+  function statusUpdate(){
     if(total_char==0){
       texthtml="私はデレマスのキャラでシコってません";
     }
@@ -57,7 +60,7 @@ for(var i=0;i<data.length;i++){
   }
   var fuckPopupBlock;
   function tweet(url){
-    var t='https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+" "+url+'&hashtags=%E3%83%87%E3%83%AC%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%A9%E3%82%B7%E3%82%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88&url=https://sudosan.github.io/imas_cg_shikoChecklist/';
+    var t='https://twitter.com/intent/tweet?text='+encodeURIComponent(texthtml)+" "+url+'&hashtags=%E3%83%87%E3%83%AC%E3%83%9E%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%A9%E3%82%B7%E3%82%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88&url=https://sudosan.github.io/imas_cg_shikoChecklist/?q='+resultToAry();
     if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Windows Phone') > 0) {
       location.href = t;
     }
@@ -69,7 +72,7 @@ for(var i=0;i<data.length;i++){
   function ss(){
     //iOSバグ対策
     scrollTo(0,0);
-    
+
     if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Windows Phone') > 0) {
     }
     else{
@@ -113,8 +116,55 @@ for(var i=0;i<data.length;i++){
       }
       return blob;
   }
+  function resultToAry(){
+    var element = document.querySelectorAll("#table > .chara");
+    var ary="";
+    for(var i=0;i<element.length;i++){
+      ary+=String(Number(element[i].style.backgroundColor==="red"));
+    }
+    var rtext="";
+    var repeat =Math.ceil(ary.length/8);
+    for(var i =0;i<repeat;i++){
+      var a = ary.substr(i*8,8);
+      if(a.length!==8){
+        a+= "0".repeat(8-a.length);
+      }
+      rtext += String.fromCharCode(parseInt(a,2));
+    }
+    var b64 = btoa(rtext).replace(/\+/g,"-").replace(/\//g,"_").replace(/=/g,"");
+    return b64;
+  }
+  function reset(){
+    window.location.search="?q=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+  }
+  //イベント関連
+  document.addEventListener('DOMContentLoaded', function(){
+    if(window.location.search.match(/\?q=/g)){
+      var qtext= atob(window.location.search.replace(/\?q=/g,"").replace(/\-/g, "+").replace(/_/g, "/"));
+      var bin ="";
+      for(var i = 0;i<qtext.length;i++){
+        bin+=("00000000"+qtext.split("")[i].charCodeAt(0).toString(2)).slice(-8);;
+        //console.log(1);
+      }
+      var textary= bin.split("");
+      var element = document.querySelectorAll("#table > .chara");
+      for(var i=0;i<element.length;i++){
+        if(textary[i]==1){
+          element[i].style.backgroundColor="red";
+          element[i].style.color="white";
+          total_age+=Number(data[i][1]);
+          total_char+=1;
+          statusUpdate();
+        }
+      }
+    }
+  },false);
+
 </script>
 <style>
+h1 > button {
+  font-size: 1em;
+}
 #table{
   display: flex;
   flex-wrap: wrap;
